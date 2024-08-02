@@ -1,4 +1,4 @@
--- Active: 1722556172348@@127.0.0.1@3306
+-- Active: 1722531236736@@127.0.0.1@3306
 
 CREATE TABLE users (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE phones (
     FOREIGN KEY (user_id) REFERENCES users (id) -- 1:m pq esse campo é unique
 );
 
-DROP TABLE phones;
+DROP TABLE users;
 
 SELECT * FROM users;
 
@@ -24,16 +24,16 @@ INSERT INTO
     users (id, name, email, password)
 VALUES (
         'u001',
-        'Ana',
-        'ana@email.com',
+        'Antonio',
+        'ant@email.com',
         '1234'
     ),
     (
         'u002',
-        'Bento',
-        'ben@email.com',
-        "benben123"
-    )
+        'Beatriz',
+        'bea@email.com',
+        'benben123'
+    );
 
 INSERT INTO
     phones (id, phone_number, user_id)
@@ -62,7 +62,6 @@ CREATE TABLE drivers (
     FOREIGN KEY (license_id) REFERENCES licenses (id)
 );
 
-
 INSERT INTO
     licenses (id, register_number, category)
 VALUES ('l001', '123456789', 'AB'),
@@ -73,7 +72,7 @@ INSERT INTO
     drivers (
         id,
         name,
-        email,  
+        email,
         password,
         license_id
     )
@@ -106,3 +105,19 @@ SELECT * FROM licenses;
 SELECT *
 FROM licenses
     INNER JOIN drivers ON drivers.license_id = licenses.id;
+
+-- Exrc. 1 - Me mostre o nome e o número do telefone do Antonio, pesquisando pelo início do nome (Ant..)
+SELECT users.name, phones.phone_number
+FROM users
+    INNER JOIN phones ON users.id = phones.user_id
+WHERE
+    users.name LIKE 'Ant%';
+
+-- Exrc. 2 - Me mostre o nome do usuário e o número de telefone dele, agrupe pelo nome e ordene de forme crescente o número de telefone
+
+SELECT users.name, phones.phone_number
+FROM users
+    INNER JOIN phones ON users.id = phones.user_id
+GROUP BY
+    users.name
+ORDER BY phones.phone_number ASC
