@@ -1,4 +1,4 @@
--- Active: 1722531236736@@127.0.0.1@3306
+-- Active: 1722556172348@@127.0.0.1@3306
 
 CREATE TABLE users (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE phones (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     phone_number TEXT UNIQUE NOT NULL,
     user_id TEXT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    FOREIGN KEY (user_id) REFERENCES users (id) -- 1:m pq esse campo é unique
 );
 
 DROP TABLE phones;
@@ -53,8 +53,6 @@ CREATE TABLE licenses (
     category TEXT NOT NULL
 );
 
-SELECT * FROM licenses;
-
 CREATE TABLE drivers (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     name TEXT NOT NULL,
@@ -64,7 +62,6 @@ CREATE TABLE drivers (
     FOREIGN KEY (license_id) REFERENCES licenses (id)
 );
 
-SELECT * FROM drivers;
 
 INSERT INTO
     licenses (id, register_number, category)
@@ -76,7 +73,7 @@ INSERT INTO
     drivers (
         id,
         name,
-        email,
+        email,  
         password,
         license_id
     )
@@ -101,6 +98,10 @@ VALUES (
         '432985',
         'l001'
     );
+
+SELECT * FROM drivers;
+
+SELECT * FROM licenses;
 
 SELECT *
 FROM licenses
